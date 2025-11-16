@@ -1,4 +1,4 @@
-import { ArrowLeft, MapPin, Phone, Clock, Share2 } from "lucide-react";
+import { ArrowLeft, MapPin, Phone, Clock } from "lucide-react";
 import { Button } from "./ui/button";
 import { Footer } from "./Footer";
 import type { UMKM } from "../data/umkmData";

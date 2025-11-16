@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import type { UMKM } from "../data/umkmData";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { motion } from "framer-motion";
-import { MapPin, ArrowRight } from "lucide-react";
+import { MapPin, ArrowRight, Sparkles } from "lucide-react";
 
 interface UMKMCardProps {
   umkm: UMKM;
@@ -13,7 +13,6 @@ interface UMKMCardProps {
 }
 
 export function UMKMCard({ umkm, onDetailClick, index, className = "" }: UMKMCardProps) {
-  // Different styles for different card sizes
   const isFeatured = className.includes("row-span-2");
 
   return (
@@ -29,16 +28,12 @@ export function UMKMCard({ umkm, onDetailClick, index, className = "" }: UMKMCar
         <div className="relative h-full flex flex-col justify-between p-6">
           {/* Top Badge */}
           <div className="flex items-start justify-between">
-            <div className="bg-gradient-to-r from-blue-500 to-purple-600 px-3 py-1.5 rounded-full border border-transparent">
-              <span className="text-white">{umkm.filter}</span>
-            </div>
-
-            {isFeatured && (
-              <div className="flex items-center gap-1 bg-yellow-500/20 backdrop-blur-md px-3 py-1.5 rounded-full border border-yellow-500/30">
-                {/* <Star className="size-4 text-yellow-400 fill-yellow-400" /> */}
-                {/* <span className="text-yellow-200">Featured</span> */}
-              </div>
-            )}
+            <motion.div className="bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 rounded-2xl border border-white/20 shadow-lg" whileHover={{ scale: 1.05, rotate: 2 }} transition={{ type: "spring", stiffness: 300 }}>
+              <span className="text-white font-semibold text-sm flex items-center gap-1">
+                <Sparkles className="size-3" />
+                {umkm.filter}
+              </span>
+            </motion.div>
           </div>
 
           {/* Bottom Content */}

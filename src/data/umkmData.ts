@@ -17,18 +17,6 @@ export interface UMKM {
 export const umkmData: UMKM[] = [
   {
     id: 1,
-    name: "Soto Ayam Pak Nur",
-    description: "Soto Ayam Pak Nur merupakan salah satu kuliner khas Surabaya yang menawarkan cita rasa autentik.",
-    fullDescription:
-      "Soto Ayam Pak Nur merupakan salah satu kuliner khas Surabaya yang menawarkan cita rasa autentik dengan kuah bening gurih, suwiran ayam lembut, serta tambahan koya yang menambah kekayaan rasa. Tempat makan ini menjadi pilihan banyak warga sekitar untuk sarapan maupun makan siang karena penyajiannya cepat, rasa yang konsisten, serta harga yang terjangkau. Dengan suasana sederhana namun nyaman, Soto Ayam Pak Nur berhasil mempertahankan cita rasa tradisional yang selalu dirindukan oleh para pelanggan.",
-    address: "Jl. Ketintang No.117, Wonokromo, Kec. Gayungan, Surabaya, Jawa Timur 60231",
-    image: "/foto_umkm/1/thumbnail.png",
-    gallery: ["/foto_umkm/1/pict_1.png", "/foto_umkm/1/pict_2.png", "/foto_umkm/1/pict_3.png"],
-    coordinates: { lat: -7.309582759537848, lng: 112.72871834328097 },
-    filter: "Kuliner",
-  },
-  {
-    id: 2,
     name: "Hi Me Hair & Beauty Salon",
     description: "Hi Me Hair & Beauty Salon hadir sebagai tempat perawatan rambut dan kecantikan yang menawarkan pelayanan profesional.",
     fullDescription:
@@ -38,7 +26,19 @@ export const umkmData: UMKM[] = [
     gallery: ["/foto_umkm/2/pict_1.png", "/foto_umkm/2/pict_2.png", "/foto_umkm/2/pict_3.png", "/foto_umkm/2/pict_4.png", "/foto_umkm/2/pict_5.png", "/foto_umkm/2/pict_6.png"],
     coordinates: { lat: -7.3095535225897175, lng: 112.72862587130307 },
     filter: "Kecantikan",
-    socialMedia: "https://sites.google.com/view/himebeauty", // Ditambahkan
+    socialMedia: "https://sites.google.com/view/himebeauty",
+  },
+  {
+    id: 2,
+    name: "Soto Ayam Pak Nur",
+    description: "Soto Ayam Pak Nur merupakan salah satu kuliner khas Surabaya yang menawarkan cita rasa autentik.",
+    fullDescription:
+      "Soto Ayam Pak Nur merupakan salah satu kuliner khas Surabaya yang menawarkan cita rasa autentik dengan kuah bening gurih, suwiran ayam lembut, serta tambahan koya yang menambah kekayaan rasa. Tempat makan ini menjadi pilihan banyak warga sekitar untuk sarapan maupun makan siang karena penyajiannya cepat, rasa yang konsisten, serta harga yang terjangkau. Dengan suasana sederhana namun nyaman, Soto Ayam Pak Nur berhasil mempertahankan cita rasa tradisional yang selalu dirindukan oleh para pelanggan.",
+    address: "Jl. Ketintang No.117, Wonokromo, Kec. Gayungan, Surabaya, Jawa Timur 60231",
+    image: "/foto_umkm/1/thumbnail.png",
+    gallery: ["/foto_umkm/1/pict_1.png", "/foto_umkm/1/pict_2.png", "/foto_umkm/1/pict_3.png"],
+    coordinates: { lat: -7.309582759537848, lng: 112.72871834328097 },
+    filter: "Kuliner",
   },
   {
     id: 3,
@@ -51,7 +51,7 @@ export const umkmData: UMKM[] = [
     gallery: ["/foto_umkm/3/pict_1.png", "/foto_umkm/3/pict_2.png", "/foto_umkm/3/pict_3.png", "/foto_umkm/3/pict_4.png", "/foto_umkm/3/pict_5.png"],
     coordinates: { lat: -7.309292352448106, lng: 112.7283048823644 },
     filter: "Kuliner",
-    socialMedia: "https://www.instagram.com/ayammandisarjana/tagged/", // Ditambahkan
+    socialMedia: "https://www.instagram.com/ayammandisarjana/tagged/",
   },
   {
     id: 4,
@@ -64,6 +64,7 @@ export const umkmData: UMKM[] = [
     gallery: ["/foto_umkm/4/pict_1.png", "/foto_umkm/4/pict_2.png", "/foto_umkm/4/pict_3.png", "/foto_umkm/4/pict_4.png"],
     coordinates: { lat: -7.309574828372756, lng: 112.72869921739012 },
     filter: "Kuliner",
+    socialMedia: "0897-0065-165",
   },
   {
     id: 5,
@@ -100,6 +101,7 @@ export const umkmData: UMKM[] = [
     gallery: ["/foto_umkm/7/pict_1.png", "/foto_umkm/7/pict_2.png", "/foto_umkm/7/pict_3.png", "/foto_umkm/7/pict_4.png", "/foto_umkm/7/pict_5.png", "/foto_umkm/7/pict_6.png"],
     coordinates: { lat: -7.309802176009869, lng: 112.7311378430574 },
     filter: "ATK",
+    socialMedia: "0821-4205-2539",
   },
   {
     id: 8,
@@ -112,6 +114,7 @@ export const umkmData: UMKM[] = [
     gallery: ["/foto_umkm/8/pict_1.png", "/foto_umkm/8/pict_2.png", "/foto_umkm/8/pict_3.png", "/foto_umkm/8/pict_4.png", "/foto_umkm/8/pict_5.png", "/foto_umkm/8/pict_6.png"],
     coordinates: { lat: -7.308452890071907, lng: 112.72623834642386 },
     filter: "Kuliner",
+    socialMedia: "0857-3278-4031",
   },
   {
     id: 9,
@@ -137,6 +140,7 @@ export const umkmData: UMKM[] = [
     ],
     coordinates: { lat: -7.308414109132075, lng: 112.726133298967 },
     filter: "Kuliner",
+    socialMedia: "https://www.looyal.id/yoikikopi",
   },
   {
     id: 10,

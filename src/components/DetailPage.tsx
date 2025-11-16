@@ -5,44 +5,12 @@ import type { UMKM } from "../data/umkmData";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Badge } from "./ui/badge";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 interface DetailPageProps {
   umkm: UMKM;
   onBack: () => void;
 }
-
-// Definisikan varian untuk animasi container dan item (untuk efek stagger)
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2, // Selang waktu antar anak elemen
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
-
-const iconVariants = {
-  hover: {
-    scale: 1.2,
-    rotate: [0, 15, -15, 15, 0], // Efek goyang
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
 
 export function DetailPage({ umkm, onBack }: DetailPageProps) {
   const containerRef = useRef(null);
@@ -54,26 +22,19 @@ export function DetailPage({ umkm, onBack }: DetailPageProps) {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
+
   return (
     <div ref={containerRef} className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-blue-950 relative overflow-hidden">
-      {/* Animated background */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.5 }}
-        className="absolute inset-0 overflow-hidden pointer-events-none"
-      >
-        <div className="absolute top-0 -left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 -right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse animation-delay-3000" />
-      </motion.div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 -left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 -right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
+      </div>
 
       {/* Floating Header */}
-      <motion.header
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="bg-black/20 backdrop-blur-2xl border-b border-white/10 sticky top-0 z-50"
-      >
+      <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="bg-black/20 backdrop-blur-2xl border-b border-white/10 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Button onClick={onBack} variant="ghost" className="gap-2 text-white hover:bg-white/10 border border-white/20 rounded-xl group">
             <ArrowLeft className="size-5 group-hover:-translate-x-1 transition-transform" />
@@ -82,7 +43,6 @@ export function DetailPage({ umkm, onBack }: DetailPageProps) {
         </div>
       </motion.header>
 
-      {/* Hero Section with Parallax */}
       <section className="relative h-[60vh] overflow-hidden">
         <motion.div style={{ y, opacity }} className="absolute inset-0">
           <ImageWithFallback src={umkm.image} alt={umkm.name} className="w-full h-full object-cover" />
@@ -90,44 +50,35 @@ export function DetailPage({ umkm, onBack }: DetailPageProps) {
         </motion.div>
 
         <div className="relative h-full flex items-end">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-            className="max-w-7xl mx-auto px-6 pb-12 w-full"
-          >
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-3 mb-4">
-              <Badge className="bg-gradient-to-r from-blue-500 to-purple-600 text-white border-0 px-4 py-2 rounded-xl">✓ Terverifikasi</Badge>
-              <Badge className="bg-white/10 backdrop-blur-md text-white border-white/30 px-4 py-2 rounded-xl">{umkm.filter}</Badge>
-            </motion.div>
-            <motion.h1 variants={itemVariants} className="text-white mb-4 max-w-3xl">{umkm.name}</motion.h1>
-            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-6 text-white/80">
-              <div className="flex items-center gap-2">
-                <MapPin className="size-5 text-blue-400" />
-                <span>{umkm.address.split(",").slice(-2).join(",")}</span>
+          <div className="max-w-7xl mx-auto px-6 pb-12 w-full">
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+              <div className="flex flex-wrap gap-3 mb-4">
+                <Badge className="bg-gradient-to-r from-blue-500 to-purple-600 text-white border-0 px-4 py-2 rounded-xl">✓ Approved</Badge>
+                <Badge className="bg-white/10 backdrop-blur-md text-white border-white/30 px-4 py-2 rounded-xl">{umkm.filter}</Badge>
               </div>
-              <div className="flex items-center gap-2">
-                <Clock className="size-5 text-purple-400" />
-                <span>Buka setiap hari</span>
+              <h1 className="text-white mb-4 max-w-3xl">{umkm.name}</h1>
+              <div className="flex flex-wrap items-center gap-6 text-white/80">
+                <div className="flex items-center gap-2">
+                  <MapPin className="size-5 text-blue-400" />
+                  <span>{umkm.address.split(",").slice(-2).join(",")}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="size-5 text-purple-400" />
+                  <span>Buka setiap hari</span>
+                </div>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Main Content - Split Layout */}
       <main className="relative max-w-7xl mx-auto px-6 py-12">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={containerVariants}
-          className="grid lg:grid-cols-3 gap-8"
-        >
+        <div className="grid lg:grid-cols-3 gap-8">
           {/* Left Column - Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* About Section */}
-            <motion.div variants={itemVariants} className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
               <h2 className="text-white mb-6 flex items-center gap-3">
                 Tentang Kami
                 <div className="h-px flex-1 bg-gradient-to-r from-blue-500 to-transparent" />
@@ -137,7 +88,7 @@ export function DetailPage({ umkm, onBack }: DetailPageProps) {
 
             {/* Gallery Section */}
             {umkm.gallery.length > 0 && (
-              <motion.div variants={itemVariants} className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
                 <h2 className="text-white mb-6 flex items-center gap-3">
                   Galeri & Produk
                   <div className="h-px flex-1 bg-gradient-to-r from-purple-500 to-transparent" />
@@ -147,9 +98,8 @@ export function DetailPage({ umkm, onBack }: DetailPageProps) {
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1, duration: 0.4 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.2 + index * 0.1 }}
                       whileHover={{ scale: 1.05, rotate: Math.random() > 0.5 ? 2 : -2 }}
                       className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer"
                     >
@@ -168,15 +118,15 @@ export function DetailPage({ umkm, onBack }: DetailPageProps) {
 
           {/* Right Column - Sticky Sidebar */}
           <div className="lg:col-span-1">
-            <motion.div variants={itemVariants} className="sticky top-24 space-y-6">
+            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }} className="sticky top-24 space-y-6">
               {/* Contact Card */}
-              <motion.div whileHover={{ scale: 1.02, transition: { duration: 0.3 } }} className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+              <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
                 <h3 className="text-white mb-4">Informasi Kontak</h3>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <motion.div variants={iconVariants} whileHover="hover" className="p-2 bg-white/10 rounded-lg">
+                    <div className="p-2 bg-white/10 rounded-lg">
                       <MapPin className="size-5 text-blue-400" />
-                    </motion.div>
+                    </div>
                     <div className="min-w-0">
                       <div className="text-white/60 mb-1">Alamat</div>
                       <div className="text-white break-words">{umkm.address}</div>
@@ -184,11 +134,13 @@ export function DetailPage({ umkm, onBack }: DetailPageProps) {
                   </div>
                   {umkm.socialMedia && (
                     <div className="flex items-start gap-3">
-                      <motion.div variants={iconVariants} whileHover="hover" className="p-2 bg-white/10 rounded-lg flex-shrink-0">
+                      <div className="p-2 bg-white/10 rounded-lg flex-shrink-0">
                         <Phone className="size-5 text-purple-400" />
-                      </motion.div>
+                      </div>
+
                       <div className="min-w-0 flex-1">
                         <div className="text-white/60 mb-1">Contact</div>
+
                         <div className="bg-white/5 rounded-lg p-3 max-w-full overflow-hidden">
                           <a
                             href={umkm.socialMedia}
@@ -204,17 +156,11 @@ export function DetailPage({ umkm, onBack }: DetailPageProps) {
                     </div>
                   )}
                 </div>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                >
-                  <Button className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white border-0 rounded-xl hover:shadow-lg hover:shadow-blue-500/50 transition-all">Hubungi Sekarang</Button>
-                </motion.div>
-              </motion.div>
+                <Button className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white border-0 rounded-xl hover:shadow-lg hover:shadow-blue-500/50 transition-all">Hubungi Sekarang</Button>
+              </div>
 
               {/* Map Card */}
-              <motion.div whileHover={{ scale: 1.02, transition: { duration: 0.3 } }} className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+              <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
                 <h3 className="text-white mb-4">Lokasi</h3>
                 <div className="aspect-square rounded-2xl overflow-hidden">
                   <iframe
@@ -228,10 +174,10 @@ export function DetailPage({ umkm, onBack }: DetailPageProps) {
                     title={`Peta lokasi ${umkm.name}`}
                   />
                 </div>
-              </motion.div>
+              </div>
             </motion.div>
           </div>
-        </motion.div>
+        </div>
       </main>
 
       <Footer />
